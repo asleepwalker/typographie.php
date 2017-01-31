@@ -7,7 +7,7 @@ Core of [Typographie](http://typographie.ru/) web service.
 
 Add package to the composer.json:
 
-	composer require asleepwalker/typographie "~1.3.1"
+	composer require asleepwalker/typographie
 
 Run Composer:
 
