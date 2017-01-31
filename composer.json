@@ -1,8 +1,9 @@
 {
     "name": "asleepwalker/typographie",
+    "version": "1.3.1",
     "description": "Preparation of russian texts before web publication.",
     "keywords": ["text", "web", "typography", "publication", "articles", "copywriting", "auto", "preparation", "russian"],
-    "homepage": "https://github.com/asleepwalker/typographie",
+    "homepage": "https://github.com/asleepwalker/typographie.php",
     "type": "library",
     "license": "MIT",
     "authors": [
