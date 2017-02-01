@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	*	Typographie, v1.3.1
+	*	Typographie, v1.4.0
 	*	(c) 2014–2017 Artyom "Sleepwalker" Fedosov <mail@asleepwalker.ru>
 	*	https://github.com/asleepwalker/typographie
 	*/
@@ -13,8 +13,9 @@
 		protected $_actions;
 		protected $_preserved;
 
-		public function __construct($actionlist) {
+		public function __construct($actionlist, $in = 'plain', $out = 'plain') {
 			$this->actions($actionlist);
+			$this->mode($in, $out);
 			$this->_preserved = array();
 		}
 
@@ -22,7 +23,15 @@
 			$this->_actions = explode(',', $actionlist);
 		}
 
+		public function mode($in, $out) {
+			$this->_in = $in;
+			$this->_out = $out;
+		}
+
 		public function process($text) {
+
+			$preserved = array();
+			$this->prepare($preserved, $text);
 
 			// Спецсимволы
 			if (in_array('specials', $this->_actions)) {
@@ -85,6 +94,8 @@
 			if (in_array('hellip', $this->_actions)) {
 				$this->processHellips($text);
 			}
+
+			$this->ready($preserved, $text);
 
 			return $text;
 		}
@@ -299,4 +310,41 @@
 			}
 		}
 
-	};
+		protected function prepare(&$pieces, &$raw) {
+			if ($this->_in == 'html' && $this->_out == 'plain') {
+				$raw = preg_replace('/[\n]*<br[\s\/]*>[\n]*/ui', "\n", $raw);
+				$raw = preg_replace('/<p[^>]*>(.*?)<\/p>[\s]*/usi', "$1\n\n", $raw);
+				$raw = strip_tags($raw);
+			} elseif ($this->_in == 'plain' && $this->_out == 'html') {
+				$raw = str_replace('<', '&lt;', $raw);
+				$raw = str_replace('>', '&gt;', $raw);
+				if (in_array('paragraphs', $this->_actions)) {
+					$raw = preg_replace('/^(.+?)$/uim', "<p>$1</p>", $raw);
+					$raw = preg_replace('/<\/p>\n<p>/ui', "<br>\n", $raw);
+				} else {
+					$raw = preg_replace('/[\n]/ui', "<br>\n", $raw);
+				}
+			}
+
+			if ($this->_out == 'html') {
+				$this->preserve_part('/<[\/]{0,1}p>/ui', $pieces, $raw);
+				if ($this->_in == 'html') {
+					if (in_array('safehtml', $this->_actions)) {
+						$this->preserve_part('/<(code|pre)(\s[^>]*)*>.*?<\/\1>/uis', $pieces, $raw);
+					}
+					$this->preserve_part('/<[^>]+>/ui', $pieces, $raw);
+				}
+			}
+		}
+
+		protected function ready($pieces, &$text) {
+			if ($this->_in == 'html' && $this->_out == 'plain') {
+				$text = html_entity_decode($text, ENT_COMPAT, 'UTF-8');
+			} elseif (in_array('entities', $this->_actions) && $this->_out == 'html') {
+				$text = htmlentities($text);
+			}
+
+			$this->restore_parts($pieces, $text);
+		}
+
+	}
