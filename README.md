@@ -20,7 +20,7 @@ Run Composer:
 
 use asleepwalker\typographie\Typographie;
 
-$engine = new Typographie('inquot,dashes,specials,paragraphs');
+$engine = new Typographie('quotes,inquot,dashes,specials,paragraphs');
 
 $raw = 'Сервис "Typographie" - подготовка текстов к веб-публикации онлайн (с) 2014-2017';
 echo $engine->process($raw);
@@ -30,7 +30,7 @@ echo $engine->process($raw);
 ## Actions
 
 `quotes` : Correction of quotes: "" becomes «».<br>
-`inquot` (needs `quotes`) : Nested quotes: «„“» (otherwise — duplicate quotes stashing).<br>
+`inquot` (requires `quotes`) : Nested quotes: «„“» (otherwise — duplicate quotes stashing).<br>
 `dashes` : If necessary replace hyphens with dashes and minus signs.<br>
 `angles` : Replace asterisks and quotes with degrees, feet, inches.<br>
 `dblspace` : Fix duplicate spaces in the text.<br>
@@ -53,6 +53,21 @@ $engine->actions('punctuation,dblspace');
 echo $engine->process('К  чёрту орфографию ,главное   все понимают !Ведь так  ?..');
 // > К чёрту орфографию, главное все понимают! Ведь так?..
 ```
+
+## Modes
+
+`plain` : Just plain text.<br>
+`html` : Safe HTML processing.
+
+The mode could be defined in the constructor:
+
+	$engine = new Typographie('quotes,dashes', $in, $out);
+
+Or by method `mode`:
+
+	$engine->mode('html', 'plain');
+
+Default congifuration is `plain` mode for both input and output.
 
 ## License
 
