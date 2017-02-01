@@ -27,12 +27,6 @@ echo $engine->process($raw);
 // > Сервис «Typographie» — подготовка текстов к веб-публикации онлайн © 2014–2017
 ```
 
-## Modes
-
-There are two input/output modes for now: `plain` for plain text and `html` for safe HTML processing.
-
-
-
 ## Actions
 
 `quotes` : Correction of quotes: "" becomes «».<br>
