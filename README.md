@@ -20,13 +20,18 @@ Run Composer:
 
 use asleepwalker\typographie\Typographie;
 
-$raw = 'Сервис "Typographie" - подготовка текстов к веб-публикации онлайн (с) 2014-2017';
 $engine = new Typographie('inquot,dashes,specials,paragraphs');
-$result = $engine->process($raw);
 
-echo $result;
+$raw = 'Сервис "Typographie" - подготовка текстов к веб-публикации онлайн (с) 2014-2017';
+echo $engine->process($raw);
 // > Сервис «Typographie» — подготовка текстов к веб-публикации онлайн © 2014–2017
 ```
+
+## Modes
+
+There are two input/output modes for now: `plain` for plain text and `html` for safe HTML processing.
+
+
 
 ## Actions
 
@@ -41,9 +46,19 @@ echo $result;
 `specialspaces` : Fix the wrong skip special characters with spaces.<br>
 `nbsp` : Attach short words to following words in the text.<br>
 `hellip` : Replace repeating dot symbols with ellipsis.<br>
-`paragraphs` : Puts paragraphs (&lt;p&gt;) when converting to HTML (with empty string as a delimeter).
+`paragraphs` : Puts paragraphs (&lt;p&gt;) when converting to HTML (with empty string as a delimeter).<br>
+`safehtml` : Don't process text inside of &lt;code&gt; and &lt;pre&gt; blocks.<br>
+`entities` : Replace special chars with HTML entities.
 
 The list should be comma separated, e.g. `action1,action2,action3`.
+
+Beside defining in the object constructor, use can change configuration by method `actions`:
+
+```
+$engine->actions('punctuation,dblspace');
+echo $engine->process('К  чёрту орфографию ,главное   все понимают !Ведь так  ?..');
+// > К чёрту орфографию, главное все понимают! Ведь так?..
+```
 
 ## License
 
