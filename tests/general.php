@@ -1,7 +1,7 @@
 <?php
 
 	/*
-	*	Typographie, v1.3.1
+	*	Typographie, v1.4.0
 	*	(c) 2014–2017 Artyom "Sleepwalker" Fedosov <mail@asleepwalker.ru>
 	*	https://github.com/asleepwalker/typographie
 	*/
