@@ -1,4 +1,4 @@
-#Typographie.php &nbsp;[![Build Status](https://travis-ci.org/asleepwalker/typographie.php.svg?branch=master)](https://travis-ci.org/asleepwalker/typographie.php)
+#Typographie.php [![Build Status](https://travis-ci.org/asleepwalker/typographie.php.svg?branch=master)](https://travis-ci.org/asleepwalker/typographie.php) [![Dependency Status](https://gemnasium.com/badges/github.com/asleepwalker/typographie.php.svg)](https://gemnasium.com/github.com/asleepwalker/typographie.php)
 
 Library for preparation of russian texts to web publication.<br>
 Core of [Typographie](http://typographie.ru/) web service.
